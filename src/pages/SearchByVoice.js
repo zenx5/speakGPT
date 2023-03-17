@@ -1,14 +1,13 @@
 import { ButtonBase, CircularProgress, IconButton, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
 import { Mic, Search } from '@mui/icons-material'
 
-import SpeechService from './services/SpeechService'
-import ListenService from './services/ListenService'
-import { query } from './services/OpenAIService'
+import SpeechService from '../services/SpeechService'
+import ListenService from '../services/ListenService'
+import { query } from '../services/OpenAIService'
 
-import './App.css';
 import { useState } from 'react';
 
-function App() {
+export default function SearchByVoice() {
   const [loading, setLoading] = useState(false)
   const [results, setResults] = useState([])
   const [active, setActive] = useState(false)
@@ -60,5 +59,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

@@ -9,8 +9,8 @@ const openai = new OpenAIApi( config )
 const query = async (text) => {
     try{
         const { data } = await openai.createChatCompletion({
-            // model: "text-davinci-003",
             model: "gpt-3.5-turbo",
+            // model:'gpt-4-0314',
             messages: [{
                 role:'user',
                 content: text
