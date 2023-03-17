@@ -3,6 +3,7 @@ import { Mic } from '@mui/icons-material'
 
 import SpeechService from './services/SpeechService'
 import ListenService from './services/ListenService'
+import { query } from './services/OpenAIService'
 
 import './App.css';
 import { useState } from 'react';
@@ -13,7 +14,7 @@ function App() {
   const speech = new SpeechService('')
   const listen = new ListenService()
 
-  const handlerActive = () => {
+  const handlerActive = async () => {
     if( active ) {
       speech.toVoice(text)
     }else{
@@ -21,6 +22,8 @@ function App() {
     }
     setActive( prev => !prev )
   }
+
+  
 
   return (
     <div className="App">
