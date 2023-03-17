@@ -8,10 +8,14 @@ const openai = new OpenAIApi( config )
 
 const query = async (text) => {
     try{
-        const { data } = await openai.createCompletion({
-            model: "text-davinci-003",
-            prompt: text,
-            temperature: 0.6,
+        const { data } = await openai.createChatCompletion({
+            // model: "text-davinci-003",
+            model: "gpt-3.5-turbo",
+            messages: [{
+                role:'user',
+                content: text
+            }],
+            temperature: 0.2,
         })
         return data
     }catch( error ){

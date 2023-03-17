@@ -1,9 +1,10 @@
 class SpeechService extends SpeechSynthesisUtterance {
 
-    constructor( string = '' ) {
+    constructor( string = '', SpeechSynthesis = window.speechSynthesis ) {
         super()
-        this.voices = window.speechSynthesis.getVoices()
-        this.text = string;
+        this.SpeechSynthesis = SpeechSynthesis
+        this.voices = this.SpeechSynthesis.getVoices()
+        this.text = string.replaceAll('\n','').replaceAll('\t','')
     }
 
     setVoice( codeLang ){
@@ -13,11 +14,21 @@ class SpeechService extends SpeechSynthesisUtterance {
         }
     }
 
-    toVoice( string ){
+    isSpeaking(){
+        return window.speechSynthesis.speaking
+    }
+
+    toVoice( stringData ){
+        if( this.isSpeaking() ) throw "Yet speking..."
+        const string = stringData.replaceAll('\n','').replaceAll('\t','').replaceAll('.','')
         if( string ) {
             this.text = string
         }
-        window.speechSynthesis.speak(this);
+        this.SpeechSynthesis.speak(this);
+    }
+
+    cancelSpeak(){
+        this.SpeechSynthesis.cancel()
     }
 }
 
