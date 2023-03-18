@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Box, CircularProgress, IconButton, List, ListItem, ListItemText, TextField, Typography } from "@mui/material";
+import { Box, CircularProgress, FormControl, IconButton, List, ListItem, ListItemText, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { query } from "../services/OpenAIService";
 
@@ -48,21 +48,29 @@ export default function Chat(){
                             primary={ item.choices[0].message.content }
                             sx={{
                                 display:'flex',
-                                justifyContent: item.choices[0].message.role==='assistant'?'flex-start':'flex-end'
+                                justifyContent: item.choices[0].message.role==='assistant'?'flex-end':'flex-start'
                             }}
                             />
                     </ListItem>)}
                 </List>
                 <TextField
+                    onKeyDown={
+                        async ({keyCode}) => {
+                            if( keyCode===13 ) await handlerSearch()
+                        }
+                    }
                     variant="outlined"
-                    sx={{ width:'100%', backgroundColor:'#fff', borderRadius:3 }}
+                    sx={{
+                        width:'100%',
+                        backgroundColor:'#fff',
+                        borderRadius:3
+                    }}
                     InputProps={{
                         endAdornment: loading ? <CircularProgress /> : <IconButton onClick={handlerSearch}><Search /></IconButton>
                     }}
                     value={value}
                     onChange={handlerChange}
                 />
-
             </Box>
         </div>
     </div>

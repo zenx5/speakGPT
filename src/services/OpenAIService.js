@@ -10,7 +10,6 @@ const query = async (text) => {
     try{
         const { data } = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
-            // model:'gpt-4-0314',
             messages: [{
                 role:'user',
                 content: text
