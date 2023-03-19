@@ -4,16 +4,19 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { SearchByVoice, Chat } from './pages';
+import { AppContextProvider } from './tools/AppContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<SearchByVoice />} />
-        <Route path='/chat' element={<Chat />} />
-      </Routes>
-    </BrowserRouter>
+    <AppContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<SearchByVoice />} />
+          <Route path='/chat' element={<Chat />} />
+        </Routes>
+      </BrowserRouter>
+    </AppContextProvider>
   </React.StrictMode>
 );
 

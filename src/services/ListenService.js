@@ -29,3 +29,9 @@ class ListenService extends window.webkitSpeechRecognition {
 
 export default ListenService
 
+function useListen(){
+    return new ListenService()
+}
+
+export { useListen }
+

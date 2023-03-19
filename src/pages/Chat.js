@@ -1,76 +1,21 @@
-import { Search } from "@mui/icons-material";
-import { Box, CircularProgress, FormControl, IconButton, List, ListItem, ListItemText, TextField, Typography } from "@mui/material";
-import { useState } from "react";
-import { query } from "../services/OpenAIService";
+import { Box } from "@mui/material";
+import {
+    InputSearch,
+    ResultList,
+    ItemResult } from "../components";
+import { useAppContext } from "../tools/AppContext";
 
 
 export default function Chat(){
-    const [loading, setLoading] = useState(false)
-    const [value, setValue] = useState('')
-    const [conversation, setConversation] = useState([])
-
-    const handlerSearch = async () => {
-        setLoading( true )
-        const response = await query(value)
-        console.log( response )
-        setConversation( prev => [
-            ...prev,
-            {
-                ...response,
-                id: `${response.id}-user`,
-                choices:[{
-                    message:{
-                        content: value,
-                        role:'user'
-                    }
-                }]
-            },
-            response
-        ])
-        setValue(prev => '')
-        setLoading( false )
-    }
-
-    const handlerChange = ({ target: { value:currentValue} }) => {
-        setValue( prev => currentValue)
-    }
-
+    const [ {conversation}] = useAppContext()
 
     return <div className="App">
         <div className="App-header">
             <Box sx={{ width:'50%', backgroundColor:'#fff5', p:2, borderRadius:3 }}>
-                <List sx={{ color:'#000', backgroundColor:'#fff', mb:2, borderRadius:3 }}>
-                    <ListItem>
-                        <ListItemText primary={<Typography sx={{ fontWeight:'bold' }}>Chat</Typography>} sx={{display:'flex', justifyContent:'center' }}/>
-                    </ListItem>
-                    { conversation.map( item => <ListItem key={item.id}>
-                        <ListItemText
-                            primary={ item.choices[0].message.content }
-                            sx={{
-                                display:'flex',
-                                justifyContent: item.choices[0].message.role==='assistant'?'flex-end':'flex-start'
-                            }}
-                            />
-                    </ListItem>)}
-                </List>
-                <TextField
-                    onKeyDown={
-                        async ({keyCode}) => {
-                            if( keyCode===13 ) await handlerSearch()
-                        }
-                    }
-                    variant="outlined"
-                    sx={{
-                        width:'100%',
-                        backgroundColor:'#fff',
-                        borderRadius:3
-                    }}
-                    InputProps={{
-                        endAdornment: loading ? <CircularProgress /> : <IconButton onClick={handlerSearch}><Search /></IconButton>
-                    }}
-                    value={value}
-                    onChange={handlerChange}
-                />
+                <ResultList>
+                    {conversation.map( item => <ItemResult key={item.id} message={item.choices[0].message.content} role={item.choices[0].message.role} />)}
+                </ResultList>
+                <InputSearch />
             </Box>
         </div>
     </div>
