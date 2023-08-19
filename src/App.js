@@ -3,7 +3,6 @@ import { Mic } from '@mui/icons-material'
 
 import SpeechService from './services/SpeechService'
 import ListenService from './services/ListenService'
-import { query } from './services/OpenAIService'
 
 import './App.css';
 import { useState } from 'react';
