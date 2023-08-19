@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "0.1.0",
-  "homepage":"https://github.com/zenx5/speakGPT",
+  "homepage":"https://zenx5.github.io/speakGPT",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
